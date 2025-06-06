@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { redirectToAuthCodeFlow, getAccessToken } from '../API/authCodeWithPkce';
+import './playlists.css';
+
 type Playlist = {
   id: string;
   name: string;
+  description: string | null;
   images: { url: string }[];
   external_urls: { spotify: string };
 };
@@ -61,14 +64,23 @@ const SpotifyPlaylists: React.FC = () => {
   if (!playlists.length) return <p>Loading playlists...</p>;
 
   return (
-    <div>
-      <h1>Spotify Playlists</h1>
-      <ul>
-        {playlists.map((playlist) => (
-          <li key={playlist.id}>{playlist.name}</li>
-        ))}
-      </ul>
-    </div>
+    <div className="playlist-grid">
+    {playlists.map((playlist) => (
+      <div key={playlist.id} className="playlist-card">
+        <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+          <img
+            src={playlist.images[0]?.url || 'https://via.placeholder.com/150'}
+            alt={playlist.name}
+            className="playlist-image"
+          />
+        </a>
+        <h3 className="playlist-name">{playlist.name}</h3>
+        <p className="playlist-description">
+          {playlist.description || 'No description provided.'}
+        </p>
+      </div>
+    ))}
+  </div>
   );
 };
 
