@@ -35,6 +35,7 @@ export async function getAccessToken(clientId: string, code: string) {
   });
 
   const { access_token } = await result.json();
+  localStorage.setItem('access_token', access_token);
   return access_token;
 }
 

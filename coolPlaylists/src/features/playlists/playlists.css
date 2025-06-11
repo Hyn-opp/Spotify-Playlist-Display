@@ -1,0 +1,94 @@
+.playlist-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 2rem;
+  width: 100%; /* Use 100% instead of 100vw */
+  background-color: #121212;
+  box-sizing: border-box; /* Ensure padding is included in the width */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  background-color: #181818;
+  padding: 1rem;
+  border-radius: 12px;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.playlist-item:hover {
+  background-color: #282828;
+  transform: scale(1.02);
+}
+
+.playlist-thumb {
+  width: 10vw;
+  height: 10vw;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 1rem;
+}
+
+.playlist-info {
+  display: flex;
+  flex-direction: column;
+  width: 70vw;
+}
+
+.playlist-name {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.playlist-description {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-top: 0.4rem;
+}
+
+
+.playlist-interaction{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.like-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.like-button img {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease;
+}
+
+.like-button:active img {
+  transform: scale(0.9);
+}
+
+.comment-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.comment-button img {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.2s ease;
+}
+
+.comment-button:active img {
+  transform: scale(0.9);
+}

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { redirectToAuthCodeFlow, getAccessToken } from '../API/authCodeWithPkce';
+import { redirectToAuthCodeFlow, getAccessToken } from '../../API/authCodeWithPkce';
 import './playlists.css';
+import like from '../../assets/like-button.png';
+import comment from '../../assets/comment.png';
+import { Link } from 'react-router-dom';
 
 type Playlist = {
   id: string;
@@ -17,6 +20,7 @@ const SpotifyPlaylists: React.FC = () => {
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
   const [error, setError] = useState<string | null>(null);
   const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID; // Replace with your client id
+  const accessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -24,13 +28,7 @@ const SpotifyPlaylists: React.FC = () => {
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
 
-      if (!code) {
-        redirectToAuthCodeFlow(clientId);
-        return;
-      }
-
       try {
-        const accessToken = await getAccessToken(clientId, code);
 
         const response = await fetch('https://api.spotify.com/v1/me/playlists', {
           headers: {
@@ -64,23 +62,38 @@ const SpotifyPlaylists: React.FC = () => {
   if (!playlists.length) return <p>Loading playlists...</p>;
 
   return (
-    <div className="playlist-grid">
-    {playlists.map((playlist) => (
-      <div key={playlist.id} className="playlist-card">
-        <a href={playlist.external_urls.spotify} target="_blank" rel="noopener noreferrer">
+    <div className="playlist-list">
+      {playlists.map((playlist) => (
+       <Link to={`/playlist/${playlist.id}`} key={playlist.id} className="playlist-item">
           <img
             src={playlist.images[0]?.url || 'https://via.placeholder.com/150'}
             alt={playlist.name}
-            className="playlist-image"
+            className="playlist-thumb"
           />
-        </a>
-        <h3 className="playlist-name">{playlist.name}</h3>
-        <p className="playlist-description">
-          {playlist.description || 'No description provided.'}
-        </p>
-      </div>
-    ))}
-  </div>
+          <div className="playlist-info">
+            <h3 className="playlist-name">{playlist.name}</h3>
+              <a
+                key={playlist.id}
+                href={playlist.external_urls.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <p className="playlist-description">
+                  {playlist.description || 'No description provided.'}
+                </p>
+              </a>
+            <div className='playlist-interaction'>
+              <button className="like-button" >
+                <img src={like} alt="Like" id="like-icon" />
+              </button>
+              <button className="comment-button" >
+                <img src={comment} alt="Comment" id="like-icon" />
+              </button>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
   );
 };
 
