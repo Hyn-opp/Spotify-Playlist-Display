@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { redirectToAuthCodeFlow, getAccessToken } from '../../API/authCodeWithPkce';
+import { redirectToAuthCodeFlow } from '../../API/authCodeWithPkce';
 import './playlists.css';
 import like from '../../assets/like-button.png';
 import comment from '../../assets/comment.png';
@@ -25,11 +25,9 @@ const SpotifyPlaylists: React.FC = () => {
   useEffect(() => {
     const controller = new AbortController();
     const fetchPlaylists = async () => {
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
+   
 
       try {
-
         const response = await fetch('https://api.spotify.com/v1/me/playlists', {
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -39,9 +37,10 @@ const SpotifyPlaylists: React.FC = () => {
 
         if (!response.ok) {
           if (response.status === 401) {
-            throw new Error('Spotify token expired. Please log in again.');
+            redirectToAuthCodeFlow(clientId);
           }
-          throw new Error('Failed to fetch playlists');
+          redirectToAuthCodeFlow(clientId);
+
         }
 
         const data = await response.json();

@@ -19,7 +19,7 @@ function Callback() {
           console.error('Failed to get access token', err);
         });
     }
-  }, []);
+  }, [navigate]);
 
   return <p>Authorizing...</p>;
 }
