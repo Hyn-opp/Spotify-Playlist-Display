@@ -13,7 +13,7 @@ function Callback() {
     if (code) {
       getAccessToken(clientId,code)
         .then(() => {
-          navigate('/'); // or redirect to protected page
+          navigate('/home'); // or redirect to protected page
         })
         .catch((err) => {
           console.error('Failed to get access token', err);

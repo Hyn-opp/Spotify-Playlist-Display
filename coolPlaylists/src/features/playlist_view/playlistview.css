@@ -1,0 +1,32 @@
+/* Styles for the playlist view */
+
+.banner {
+  background-color: #1DB954; /* Spotify green */
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.playlist-info {
+  font-size: 2em;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.song-item {
+  display: flex;
+  flex-direction: row;
+  align-items: row;
+  margin: 10px 0;
+}
+
+.song-thumb {
+  width: 40px; /* Size of the song cover */
+  height: 40px; /* Space between cover and song name */
+}
+
+.song-name {
+  font-size: 1.2em;
+}
