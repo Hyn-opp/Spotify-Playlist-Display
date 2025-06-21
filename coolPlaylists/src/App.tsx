@@ -11,7 +11,7 @@ function App() {
     <Routes>
       <Route path="/" element={<SpotifyPlaylists />} />
       <Route path="/callback" element={<Callback />} />
-      <Route path="/playlist/:id" element={<PlaylistView/>} />
+      <Route path="/playlist/:id" element={<PlaylistView />} />
     </Routes>
   )
 }

@@ -6,17 +6,15 @@ const PlaylistView = () => {
   const { id } = useParams<{ id: string }>();
   const [songs, setSongs] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const accessToken = localStorage.getItem('access_token');
   const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID; // Replace with your client id
 
+
+  /* Need to get the accessToken from localStorage to make API calls but can only do that in the useEffect */
   useEffect(() => {
+    
+    const accessToken = localStorage.getItem('access_token');
+    console.log("Access Token:", accessToken);
     const controller = new AbortController();
-  
-    if (!accessToken) {
-      console.error("Missing token, redirecting...");
-      redirectToAuthCodeFlow(clientId);
-      return;
-    }
   
     if (!id) {
       console.error("Missing playlist ID from route params.");
@@ -37,7 +35,6 @@ const PlaylistView = () => {
           const errorData = await response.json();
           console.error("API error:", errorData);
           if (response.status === 401) {
-            localStorage.removeItem("access_token");
             redirectToAuthCodeFlow(clientId);
           }
           throw new Error(`Failed to fetch songs: ${response.status}`);
@@ -54,7 +51,7 @@ const PlaylistView = () => {
   
     fetchSongs();
     return () => controller.abort();
-  }, [id, accessToken]);
+  }, [id]);
   
 
   return (
